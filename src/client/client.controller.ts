@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, ParseUUIDPipe } from '@nestjs/common';
 import { ClientService } from './client.service';
 import { CreateClientDto } from './dto/create-client.dto';
 import { UpdateClientDto } from './dto/update-client.dto';
@@ -18,8 +18,8 @@ export class ClientController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.clientService.findOne(+id);
+  findOne(@Param('id', ParseUUIDPipe) id: string) {
+    return this.clientService.findOne(id);
   }
 
   @Patch(':id')
@@ -28,7 +28,7 @@ export class ClientController {
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.clientService.remove(+id);
+  remove(@Param('id', ParseUUIDPipe) id: string) {
+    return this.clientService.remove(id);
   }
 }
