@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ClientModule } from './client/client.module';
+import { OrdersModule } from './orders/orders.module';
 
 
 @Module({
@@ -20,6 +21,8 @@ import { ClientModule } from './client/client.module';
     }),
 
     ClientModule,
+
+    OrdersModule,
     
   ],
 })

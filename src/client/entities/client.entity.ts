@@ -1,4 +1,4 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity,PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
 export class Client {
@@ -22,6 +22,7 @@ export class Client {
 
     @Column()
     dateOfUpdate: Date
+
 
 }
 
