@@ -11,16 +11,17 @@ export class CreateClientDto {
     @IsNotEmpty()    
     lastName: string
     
+    @Type(() => Number)
     @IsNumber()
     @IsNotEmpty()
-    phone: number
+    phone: number;
     
     @Type(() => Date)
     @IsDate()
-    dateOfBirth: Date
+    dateOfBirth: Date;
 
     @Type(() => Date)
     @IsDate()
-    dateOfUpdate: Date
+    dateOfUpdate: Date;
 
 }
