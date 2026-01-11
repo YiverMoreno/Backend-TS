@@ -60,57 +60,63 @@ export class OrdersService {
   }
 
   async findAll(): Promise<Order[]> {
-  return this.orderRepository.find({
-    relations: {
-      client: true,
-      details: true,
-    },
-    order: {
-      createdAt: 'DESC',
-    },
-  });
-} 
+    return this.orderRepository.find({
+      relations: {
+        client: true,
+        details: true,
+      },
+      order: {
+        createdAt: 'DESC',
+      },
+    });
+  } 
 
 
   async findOne(id: string): Promise<Order> {
-  const order = await this.orderRepository.findOne({
-    where: { id },
-    relations: {
-      client: true,
-      details: true,
-    },
-  });
+    const order = await this.orderRepository.findOne({
+      where: { id },
+      relations: {
+        client: true,
+        details: true,
+      },
+    });
 
-  if (!order) {
-    throw new NotFoundException('Orden no encontrada');
+    if (!order) {
+      throw new NotFoundException('Orden no encontrada');
+    }
+
+    return order;
   }
 
-  return order;
-}
 
+  async updateStatus(
+    orderId: string,
+    dto: UpdateOrderStatusDto,
+  ) {
+    const order = await this.orderRepository.findOne({
+      where: { id: orderId },
+    });
 
-async updateStatus(
-  orderId: string,
-  dto: UpdateOrderStatusDto,
-) {
-  const order = await this.orderRepository.findOne({
-    where: { id: orderId },
-  });
+    if (!order) {
+      throw new NotFoundException('Orden no encontrada');
+    }
 
-  if (!order) {
-    throw new NotFoundException('Orden no encontrada');
+    order.status = dto.status;
+
+    return this.orderRepository.save(order);
   }
 
-  order.status = dto.status;
+  
+  async remove(orderId: string): Promise<void> {
+    const order = await this.orderRepository.findOne({
+      where: { id: orderId },
+    });
 
-  return this.orderRepository.save(order);
-}
+    if (!order) {
+      throw new NotFoundException('Orden no encontrada');
+    }
 
-  update(id: number, updateOrderDto: UpdateOrderDto) {
-    return `This action updates a #${id} order`;
+    await this.orderRepository.remove(order);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} order`;
-  }
 }
